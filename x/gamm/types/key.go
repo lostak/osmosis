@@ -25,10 +25,8 @@ var (
 	KeyPrefixPools = []byte{0x02}
 	// KeyTotalLiquidity defines key to store total liquidity.
 	KeyTotalLiquidity = []byte{0x03}
-	// KeyPrefixGovs defines prefix to store governors 
-	KeyPrefixGovs = []byte{0x04}
 	// KeyPrefixWhitelist prefix to store whitelists
-	KeyPrefixWhitelist = []byte{0x05}
+	KeyPrefixWhitelist = []byte{0x04}
 
 )
 
@@ -62,11 +60,6 @@ func GetKeyPrefixPools(poolId uint64) []byte {
 	return append(KeyPrefixPools, sdk.Uint64ToBigEndian(poolId)...)
 }
 
-func GetKeyPrefixGovs(poolId uint64) []byte {
-	return append(KeyPrefixGovs, sdk.Uint64ToBigEndian(poolId)...)
-}
-
-func GetKeyPrefixWhitelist(govAddr string, memberAddr string) []byte {
-	key := append(KeyPrefixWhitelist, []byte(govAddr)...)
-	return append(key, []byte(memberAddr)...)
+func GetKeyPrefixWhitelist(poolId uint64) []byte {
+	return append(KeyPrefixWhitelist, sdk.Uint64ToBigEndian(poolId)...)
 }
