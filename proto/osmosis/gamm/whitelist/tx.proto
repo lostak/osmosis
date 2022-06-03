@@ -1,0 +1,40 @@
+syntax = "proto3";
+package osmosis.gamm.v1beta1;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/osmosis-labs/osmosis/v7/x/gamm/types";
+
+service Msg {
+    rpc AddToWhitelist(MsgUpdateWhitelist) returns (MsgAddToWhitelistResponse);
+    rpc ChangeGovernor(MsgChangeGovernor) return (MsgChangeGovernorResponse);
+}
+
+// ===================== MsgAddToWhitelist
+// error if address to add is not a valid accAddr
+// error if there is no pool for id
+// error if there is no governor for the pool
+// error if the sender is not the governor
+// error if the whitelist is not exclusive
+// add address to whitelist
+message MsgUpdateWhitelist {
+    string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
+    uint64 poolId = 2 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
+    string memberAddr = 3 [ (gogoproto.moretags) = "yaml:\"member_address\"" ];
+}
+
+message MsgAddToWhitelistResponse {}
+
+// ===================== MsgChangeGovernor
+// error if address to give governance to is not a valid accAddr
+// error if there is no pool for id
+// error if there is no governor for the pool
+// error if the sender is not the governor
+// create new governor for poolId with a reference to previous governor's whitelist
+message MsgChangeGovernor {
+    string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
+    uint64 poolId = 2 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
+    string newGovernorAddr = 3 [ (gogoproto.moretags) = "yaml:\"new_governor_address\"" ];
+}
+
+message MsgChangeGovernorResponse {}

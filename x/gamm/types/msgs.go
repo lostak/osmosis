@@ -19,6 +19,8 @@ const (
 	TypeMsgJoinSwapShareAmountOut  = "join_swap_share_amount_out"
 	TypeMsgExitSwapExternAmountOut = "exit_swap_extern_amount_out"
 	TypeMsgExitSwapShareAmountIn   = "exit_swap_share_amount_in"
+	TypeMsgAddToWhitelist		   = "add_to_whitelist"
+	TypeMsgChangeGovernor		   = "change_governor"
 )
 
 func ValidateFutureGovernor(governor string) error {
@@ -347,3 +349,66 @@ func (msg MsgExitSwapShareAmountIn) GetSigners() []sdk.AccAddress {
 	}
 	return []sdk.AccAddress{sender}
 }
+
+
+var _ sdk.Msg = &MsgAddToWhitelist{}
+
+func (msg MsgAddToWhitelist) Route() string { return RouterKey }
+func (msg MsgAddToWhitelist) Type() string { return TypeMsgAddToWhitelist }
+func (msg MsgAddToWhitelist) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(msg.Sender)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid sender address (%s)", err)
+	}
+
+	_, err := sdk.AccAddressFromBech32(msg.MemberAddr)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid member address (%s)", err)
+	}
+
+	return nil
+}
+
+func (msg MsgAddToWhitelist) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgAddToWhitelist) GetSigners() []sdk.AccAddress {
+	sender, err := sdk.AccAddressFromBech32(msg.Sender)
+	if err != nil {
+		panic(err)
+	}
+	return []sdk.AccAddress{sender}
+}
+
+var _ sdk.Msg = &MsgChangeGovernor{}
+
+func (msg MsgChangeGovernor) Route() string { return RouterKey }
+func (msg MsgChangeGovernor) type() string { return TypeMsgChangeGovernor }
+func (msg MsgChangeGovernor) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(msg.Sender)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid sender address (%s)", err)
+	}
+
+	_, err := sdk.AccAddressFromBech32(msg.NewGovernorAddr)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid member address (%s)", err)
+	}
+
+	return nil
+}
+
+func (msg MsgChangeGovernor) GetSignBytes []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgChangeGovernor) GetSigners []sdk.AccAddress {
+	sender, err := sdk.AccAddressFromBech32(msg.Sender)
+	if err != nil {
+		panic(err)
+	}
+	return []sdk.AccAddress(sender)
+}
+
+
