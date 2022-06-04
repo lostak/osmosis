@@ -15,7 +15,7 @@ func (k Keeper) MarshalWhitelist(whitelist types.WhitelistI) ([]byte, error) {
 }
 
 func (k Keeper) UnmarshalWhitelist(bz []byte) (types.WhitelistI, error) {
-	var acc types.PoolI
+	var acc types.WhitelistI
 	return acc, k.cdc.UnmarshalInterface(bz, &acc)
 }
 
@@ -41,7 +41,7 @@ func (k Keeper) iterator(ctx sdk.Context, prefix []byte) sdk.Iterator {
 	return sdk.KVStorePrefixIterator(store, prefix)
 }
 
-func (k Keeper) GetWhitelists(ctx sdk.Context) (res []types.PoolI, err error) {
+func (k Keeper) GetWhitelists(ctx sdk.Context) (res []types.WhitelistI, err error) {
 	iter := k.iterator(ctx, types.KeyPrefixWhitelist)
 	defer iter.Close()
 
