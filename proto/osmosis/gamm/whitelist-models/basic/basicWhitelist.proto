@@ -5,19 +5,28 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/osmosis-labs/osmosis/v7/x/gamm/whitelist";
 
-message Whitelist {
-    option (gogoproto.goproto_getters) = false;
-    option (gogoproto.goproto_stringer) = false;
-
-    uint64 poolId = 1 [(gogoproto.moretags) = "yaml:\"whitelist_pool_id\"" ];
-    
-    string governor = 2 [
-        (gogoproto.moretags) = "yaml:\"governor_address\"",
-        (gogoproto.nullable) = false
-    ];
-
-    repeated string member = 3 [
+message Members {
+    repeated string addresses = 1 [
         (gogoproto.moretags) = "yaml:\"member_addresses\"",
         (gogoproto.nullable) = false
     ];
 }
+
+message BasicWhitelist {
+    option (gogoproto.goproto_getters) = false;
+    option (gogoproto.goproto_stringer) = false;
+
+    uint64 poolId = 1 [(gogoproto.moretags) = "yaml:\"whitelist_pool_id\"" ];
+    bool exclusive = 2 [(gogoproto.moretags) = "yaml:\"whitelist_exclusivity""];
+
+    string governor = 3 [
+        (gogoproto.moretags) = "yaml:\"governor_address\"",
+        (gogoproto.nullable) = false
+    ];
+
+    Members members = 4 [
+        (gogoproto.moretags) = "yaml:\"whitelist_members\"",
+        (gogoproto.nullable) = false
+    ];
+}
+

@@ -1,0 +1,64 @@
+syntax = "proto3";
+package osmosis.gamm.v1beta1;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/osmosis-labs/osmosis/v7/x/gamm/types";
+
+service Msg {
+    rpc AddToWhitelist(MsgAddToWhitelist) returns (MsgAddToWhitelistResponse);
+    rpc RemoveFromWhitelist(MsgRemoveFromWhitelist) returns (MsgRemoveFromWhitelistResponse);
+    rpc ChangeGovernor(MsgChangeGovernor) returns (MsgChangeGovernorResponse);
+    rpc SetExclusivity(MsgSetExclusivity) returns (MsgSetExclusivityResponse);
+}
+
+// ===================== MsgAddToWhitelist
+// error if address to add is not a valid accAddr
+// error if there is no whitelist for the pool
+// error if the sender is not the governor
+// add address to whitelist
+message MsgAddToWhitelist {
+    string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
+    uint64 poolId = 2 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
+    string memberAddr = 3 [ (gogoproto.moretags) = "yaml:\"member_address\"" ];
+}
+
+message MsgAddToWhitelistResponse {}
+
+// ===================== MsgRemoveFromWhitelist
+// error if address to remove is not a valid accAddr
+// error if there is no whitelist for the pool
+// error if the sender is not the governor
+// remove address from whitelist
+message MsgRemoveFromWhitelist {
+    string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
+    uint64 poolId = 2 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
+    string memberAddr = 3 [ (gogoproto.moretags) = "yaml:\"member_address\"" ];
+}
+
+message MsgRemoveFromWhitelistResponse {}
+
+// ===================== MsgChangeGovernor
+// error if address to give governance to is not a valid accAddr
+// error if there is no whitelist for the pool
+// error if the sender is not the governor
+// set governor to be new governor addr
+message MsgChangeGovernor {
+    string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
+    uint64 poolId = 2 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
+    string newGovernorAddr = 3 [ (gogoproto.moretags) = "yaml:\"new_governor_address\"" ];
+}
+
+message MsgChangeGovernorResponse {}
+
+// ===================== MsgSetExclusivity
+// error if there is no whitelist for the pool
+// error if the sender is not the governor
+// update exclusivity
+message MsgSetExclusivity {
+    string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
+    uint64 poolId = 2 [ (gogoproto.moretages) = "yaml:\"pool_id\"" ];
+    bool exclusive = 3 [ (gogoproto.moretags) = "yaml:\"exclusive"" ];
+}
+
+message MsgSetExclusivityResponse {}
