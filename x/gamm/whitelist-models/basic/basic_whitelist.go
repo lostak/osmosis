@@ -2,7 +2,8 @@ package basic
 
 import (
 	"errors"
-	
+	"time"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/osmosis-labs/osmosis/v7/x/gamm/types"
@@ -14,15 +15,17 @@ var (
 
 // NewBasicWhitelist resturns a whitelist under with exclusivity, membership
 // and governance controled by the creator
-func NewBasicWhitelist(poolId uint64, governorAddr string, exclusive bool) (Whitelist, error) {
+func NewBasicWhitelist(poolId uint64, governorAddr string, exclusive bool, members Members) (Whitelist, error) {
 	// assume poolId relates to an existing pool and that govenerAddr is a valid addr
 	whitelist := &Whitelist{
 		PoolId:		poolId,
 		Exclusive:	exclusive,
 		Governor:	govenerAddr,
-		Member:		nil,	
+		Members:	Members{},	
 	}
 	
+	err = whitelist.setInitialMembers(members, blockTime)
+
 	return *whitelist, nil
 }
 
@@ -62,9 +65,14 @@ func (wl *Whitelist) addMember(memberAddr) error {
 }
 
 func (wl *Whitelist) removeMember(memberAddr) error {
-	
+
 }
 
 func (wl *Whitelist) AddMemberToWhitelist(senderAddr string, memberAddr string) error {
 
+}
+
+func (wl *Whitelist) setInitialMembers(members []Members) error {
+	wl.Members = members
+	return nil
 }
