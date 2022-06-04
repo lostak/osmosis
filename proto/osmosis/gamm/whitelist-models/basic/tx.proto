@@ -58,7 +58,7 @@ message MsgChangeGovernorResponse {}
 message MsgSetExclusivity {
     string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
     uint64 poolId = 2 [ (gogoproto.moretages) = "yaml:\"pool_id\"" ];
-    bool exclusive = 3 [ (gogoproto.moretags) = "yaml:\"exclusive"" ];
+    bool exclusive = 3 [ (gogoproto.moretags) = "yaml:\"exclusive\"" ];
 }
 
 message MsgSetExclusivityResponse {}

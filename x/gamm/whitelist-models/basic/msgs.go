@@ -93,11 +93,11 @@ func (msg MsgChangeGovernor) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgChangeGovernor) GetSignBytes []byte {
+func (msg MsgChangeGovernor) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgChangeGovernor) GetSigners []sdk.AccAddress {
+func (msg MsgChangeGovernor) GetSigners() []sdk.AccAddress {
 	sender, err := sdk.AccAddressFromBech32(msg.Sender)
 	if err != nil {
 		panic(err)
@@ -118,11 +118,11 @@ func (msg MsgSetExclusivity) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgSetExclusivity) GetSignBytes []byte {
+func (msg MsgSetExclusivity) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgSetExclusivity) GetSigners []sdk.AccAddress {
+func (msg MsgSetExclusivity) GetSigners() []sdk.AccAddress {
 	sender, err := sdk.AccAddressFromBech32(msg.Sender)
 	if err != nil {
 		panic(err)

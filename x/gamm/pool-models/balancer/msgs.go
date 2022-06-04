@@ -193,14 +193,14 @@ func (msg MsgCreateWhitelistedBalancerPool) CreateWhitelist(ctx sdk.Context, poo
 }
 
 // create and return a balancer pool and a basic whitelist
-fucn (msg MsgCreateWhitelistedBalancerPool) CreateWhitelistedPool(ctx sdk.Context, poolID uint64, exclusive bool) (pool types.PoolI, whitelist types.WhitelistI, err error) {
+func (msg MsgCreateWhitelistedBalancerPool) CreateWhitelistedPool(ctx sdk.Context, poolID uint64, exclusive bool) (pool types.PoolI, whitelist types.WhitelistI, err error) {
 	// create pool
 	pool, err = msg.CreatePool(ctx, poolID)
-	if err := nil {
+	if err != nil {
 		return &pool, &whitelist, err
 	}
 	// create whitelist
-	whitelist, err = msg.CreateWhitelist(ctx sdk.Context, poolID uint64, exclusive)
+	whitelist, err = msg.CreateWhitelist(ctx, poolID, exclusive)
 	if err != nil {
 		return &pool, &whitelist, err
 	}

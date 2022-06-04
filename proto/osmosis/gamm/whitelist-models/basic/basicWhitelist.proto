@@ -17,7 +17,7 @@ message BasicWhitelist {
     option (gogoproto.goproto_stringer) = false;
 
     uint64 poolId = 1 [(gogoproto.moretags) = "yaml:\"whitelist_pool_id\"" ];
-    bool exclusive = 2 [(gogoproto.moretags) = "yaml:\"whitelist_exclusivity""];
+    bool exclusive = 2 [(gogoproto.moretags) = "yaml:\"whitelist_exclusivity\""];
 
     string governor = 3 [
         (gogoproto.moretags) = "yaml:\"governor_address\"",
