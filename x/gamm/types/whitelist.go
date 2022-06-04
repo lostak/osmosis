@@ -13,6 +13,7 @@ type WhitelistI interface {
 	proto.Message
 
 	GetGovernor() sdk.AccAddress
+	GetId() uint64
 	String() string
 
 	// Returns whether pool is currently exclusive

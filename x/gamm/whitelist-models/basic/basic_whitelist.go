@@ -34,6 +34,10 @@ func (wl Whitelist) GetGovernor() sdk.AccAddress {
 	return wl.Governor
 }
 
+func (wl Whitelist) GetId() uint64 {
+	return wl.PoolId
+}
+
 // Returns whether pool is currently exclusive
 func (wl Whitelist) IsExclusive() (bool, error) {
 	return pa.Exclusive
