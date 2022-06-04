@@ -64,18 +64,33 @@ func (wl Whitelist) CheckAddress(memberAddr string) (bool, error) {
 	return true, nil
 }
 
+// TODO
 func (wl *Whitelist) addMember(memberAddr) error {
 	return nil
 }
 
+// TODO
 func (wl *Whitelist) removeMember(memberAddr) error {
-
+	return nil
 }
 
+// TODO
 func (wl *Whitelist) AddMemberToWhitelist(senderAddr string, memberAddr string) error {
+	if !wl.Governor.Equals(senderAddr) {
+		return errors.New("msg creator not Governor - Only the governor can add/remove members")
+	}
 
+	return wl.addMember(memberAddr)
 }
 
+func (wl *Whitelist) RemoveMemberFromWhitelist(senderAddr string, memberAddr string) error {
+	if !wl.Governor.Equals(senderAddr) {
+		return errors.New("msg creator not Governor - Only the governor can add/remove members")
+	}
+
+	return wl.removeMember(memberAddr)
+}
+ 
 func (wl *Whitelist) setInitialMembers(members []Members) error {
 	wl.Members = members
 	return nil
