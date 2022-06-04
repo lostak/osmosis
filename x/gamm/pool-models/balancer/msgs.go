@@ -13,13 +13,8 @@ const (
 )
 
 var (
-	// TODO figure out what this actually means
-	// Is this the glue for PoolI?
 	_ sdk.Msg             = &MsgCreateBalancerPool{}
 	_ types.CreatePoolMsg = &MsgCreateBalancerPool{}
-	
-	_ sdk.Msg 			  			 = &TypeMsgCreateWhitelistedBalancerPool{}
-	_ types.CreateWhitelistedPoolMsg = &TypeMsgCreateWhitelistedBalancerPool{}
 )
 
 func NewMsgCreateWhitelistedBalancerPool(
@@ -156,6 +151,10 @@ func (msg MsgCreateBalancerPool) CreatePool(ctx sdk.Context, poolID uint64) (typ
 	return &poolI, err
 }
 
+var(
+	_ sdk.Msg 			  			 = &TypeMsgCreateWhitelistedBalancerPool{}
+	_ types.CreateWhitelistedPoolMsg = &TypeMsgCreateWhitelistedBalancerPool{}
+)
 /// Implement the CreateWhitelistedPoolMsg interface
 
 func (msg MsgCreateWhitelistedBalancerPool) PoolCreator() sdk.AccAddress {
