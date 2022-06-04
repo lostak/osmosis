@@ -7,7 +7,10 @@ import sdk "github.com/cosmos/cosmos-sdk/types"
 type CreateWhitelistedPoolMsg interface {
 	CreatePoolMsg
 	
-	// CreateGovernor makes the msg signer the governor for the pool 
-	// with an empty whitelist and exclusivity initially true. 
-	CreateWhitelistedPool(ctx sdk.Context, poolID uint64, sender string) (WhitelistI, error)
+	// CreateWhitelist creates a new whitelist for the pool id with the sender as the governor
+	CreateWhitelist(ctx sdk.Context, poolID uint64) (WhitelistI, error)
+
+	// CreateWhitelistedPool creates a new pool and a new associated whitelist where 
+	// the sender is the governor 
+	CreateWhitelistedPool(ctx sdk.Context, poolID uint64) (PoolI, WhitelistI, error)
 }
